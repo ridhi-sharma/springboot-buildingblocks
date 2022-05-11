@@ -1,11 +1,15 @@
 package com.stacksimplify.restservices.entities;
 	
-	import javax.persistence.Column;
+	import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 	//Entity 
 	// and
 	@Entity  
@@ -35,6 +39,10 @@ import javax.validation.constraints.*;
 	
 		@Column(name = "SSN", length = 50, nullable = false, unique = true)
 		private String ssn;
+		
+		//we don't want to create foreign key on both sides so we use mappedBy (which means "user" column in orders entity will be foreign key.
+		@OneToMany(mappedBy= "user")
+		private List<Order> order;
 	
 		// No Argument Constructor
 		public User() {
@@ -108,6 +116,14 @@ import javax.validation.constraints.*;
 			this.ssn = ssn;
 		}
 	
+		public List<Order> getOrder() {
+			return order;
+		}
+
+		public void setOrder(List<Order> order) {
+			this.order = order;
+		}
+
 		// To String
 		@Override
 		public String toString() {
