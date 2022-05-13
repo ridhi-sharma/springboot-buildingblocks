@@ -1,5 +1,6 @@
 package com.stacksimplify.restservices.Hello;
 
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,13 @@ public class HelloWorldController {
 		
 		return new UserDetails("Raghu","Sharma", "Amritsar");
 		
+	}
+	
+	private ResourceBundleMessageSource messageResource;
+	@GetMapping("/hello-int")
+	public String getMessagesInI18NFormat() {
+		return "Hello World I18N";
+		//code for internationalization
 	}
 	
 }
