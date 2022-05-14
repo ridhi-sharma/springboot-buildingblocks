@@ -13,42 +13,50 @@ import javax.validation.constraints.Size;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonView;
 	//Entity 
 	// and
 	@Entity  
 	@Table(name ="user")
 	//@JsonIgnoreProperties({"firstname","lastname"})  -- Static Filtering
-	@JsonFilter("userFilter")
+	//@JsonFilter("userFilter")  --used for MappingJacksonValue filtering section
 	public class User extends RepresentationModel{
 	
 		@Id
 		@GeneratedValue
+		@JsonView(Views.External.class)
 		private Long id;
 	
 		@NotEmpty(message="username is mandatory field")
 		@Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
+		@JsonView(Views.External.class)
 		private String username;
 	
 		@Size(min=2,message="username is mandatory field")
 		@Column(name = "FIRST_NAME", length = 50, nullable = false)
+		@JsonView(Views.External.class)
 		private String firstname;
 	
 		@Column(name = "LAST_NAME", length = 50, nullable = false)
+		@JsonView(Views.External.class)
 		private String lastname;
 	
 		@Column(name = "EMAIL_ADDRESS", length = 50, nullable = false)
+		@JsonView(Views.External.class)
 		private String email;
 	
 		@Column(name = "ROLE", length = 50, nullable = false)
+		@JsonView(Views.Internal.class)
 		private String role;
 	
 		@Column(name = "SSN", length = 50, nullable = false, unique = true)
+		@JsonView(Views.Internal.class)
 		//@JsonIgnore  --Static Filtering
 		private String ssn;
 		
 		//we don't want to create foreign key on both sides so we use mappedBy (which means "user" column in orders entity will be foreign key.
 		@OneToMany(mappedBy= "user")
+		@JsonView(Views.Internal.class)
 		private List<Order> order;
 	
 		// No Argument Constructor
