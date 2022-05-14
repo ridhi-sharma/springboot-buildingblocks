@@ -13,13 +13,13 @@ import javax.validation.constraints.Size;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFilter;
 	//Entity 
 	// and
 	@Entity  
 	@Table(name ="user")
-	@JsonIgnoreProperties({"firstname","lastname"})
+	//@JsonIgnoreProperties({"firstname","lastname"})  -- Static Filtering
+	@JsonFilter("userFilter")
 	public class User extends RepresentationModel{
 	
 		@Id
@@ -44,7 +44,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 		private String role;
 	
 		@Column(name = "SSN", length = 50, nullable = false, unique = true)
-		@JsonIgnore
+		//@JsonIgnore  --Static Filtering
 		private String ssn;
 		
 		//we don't want to create foreign key on both sides so we use mappedBy (which means "user" column in orders entity will be foreign key.
