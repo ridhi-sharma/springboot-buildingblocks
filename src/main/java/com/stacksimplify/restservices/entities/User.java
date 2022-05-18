@@ -58,13 +58,28 @@ import com.fasterxml.jackson.annotation.JsonView;
 		@OneToMany(mappedBy= "user")
 		@JsonView(Views.Internal.class)
 		private List<Order> order;
+		
+		@Column(name = "ADDRESS")
+		public String address;
+		
 	
+		public String getAddress() {
+			return address;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}
+
 		// No Argument Constructor
 		public User() {
 		}
 	
 		// Fields Constructor
-		public User(Long id, String username, String firstname, String lastname, String email, String role, String ssn) {
+		public User(Long id, @NotEmpty(message = "username is mandatory field") String username,
+				@Size(min = 2, message = "username is mandatory field") String firstname, String lastname, String email,
+				String role, String ssn, List<Order> order, String address) {
+			super();
 			this.id = id;
 			this.username = username;
 			this.firstname = firstname;
@@ -72,13 +87,16 @@ import com.fasterxml.jackson.annotation.JsonView;
 			this.email = email;
 			this.role = role;
 			this.ssn = ssn;
+			this.order = order;
+			this.address = address;
 		}
-	
 		// Getters and Setters
 		public Long getId() {
 			return id;
 		}
 	
+		
+
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -143,7 +161,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 		@Override
 		public String toString() {
 			return "User [id=" + id + ", username=" + username + ", firstname=" + firstname + ", lastname=" + lastname
-					+ ", email=" + email + ", role=" + role + ", ssn=" + ssn + "]";
+					+ ", email=" + email + ", role=" + role + ", ssn=" + ssn + ", order=" + order + ", address="
+					+ address + "]";
 		}
+
+		// To String
+		
 		
 	}
